@@ -9,18 +9,18 @@ function App() {
 const[contact, setContact] = useState([]);
 
 const [isUpdate, setIsUpdate] = useState({
-  id: null,
+  id_user: null,
   status: false
 })
 
 const [formData, setFormData] = useState({
-  name: '',
+  nama: '',
   telp: '',
 })
 
 useEffect(() => {
   //ambil data
-  axios.get('http://localhost:3000/contact').then((res) =>{
+  axios.get('https://3c6b-2001-448a-302c-326a-e5d3-1ce1-9475-a65f.ngrok.io/api/users/').then((res) =>{
     setContact(res?.data ?? [])
   })
 },[])
@@ -34,60 +34,62 @@ function handleChange(e){
 function handleSubmit(e) {
   e.preventDefault()
   let data = [...contact]
-  if (formData.name ==="") {
+  if (formData.nama ==="") {
+    alert('mohon diisi')
     return false
   }
   if (formData.telp ==="") {
+    alert('mohon diisi')
     return false
   }
 
   if (isUpdate.status) {
     data.forEach((contact) =>{
-      if (contact.id === isUpdate.id) {
-        contact.name = formData.name;
+      if (contact.id_user === isUpdate.id_user) {
+        contact.nama = formData.nama;
         contact.telp = formData.telp;
       }
     });
 
-    axios.put(`http://localhost:3000/contact/${isUpdate.id}`, {
-      name: formData.name, telp: formData.telp
+    axios.put(`https://3c6b-2001-448a-302c-326a-e5d3-1ce1-9475-a65f.ngrok.io/api/users/${isUpdate.id_user}`, {
+      nama: formData.nama, telp: formData.telp
     }).then(res => {
       alert('berhasil mengedit data')
     })
 
   }else{
-    let newData = {id: uid(), name: formData.name, telp: formData.telp}
+    let newData = {id_user: uid(), nama: formData.nama, telp: formData.telp}
     data.push(newData)
-    axios.post('http://localhost:3000/contact', newData).then(res => {
+    axios.post('https://3c6b-2001-448a-302c-326a-e5d3-1ce1-9475-a65f.ngrok.io/api/users/', newData).then(res => {
       alert('berhasil menyimpan data')
     })
   }
 
   setContact(data);
-  setIsUpdate({id: null, status: false})
-  setFormData({name: '', telp:''})
+  setIsUpdate({id_user: null, status: false})
+  setFormData({nama: '', telp:''})
 }
 
-  function handleEdit(id) {
+  function handleEdit(id_user) {
     let data = [...contact]
-    let foundData = data.find((contact) => contact.id === id)
-    setFormData({name: foundData.name, telp:foundData.telp})
-    setIsUpdate({id: id, status: true})
-  }
+    let foundData = data.find((contact) => contact.id_user === id_user)
+    setFormData({nama: foundData.nama, telp:foundData.telp})
+    setIsUpdate({id_user: id_user, status: true})
+}
 
-  function handleDelete(id) {
+  function handleDelete(id_user) {
+    console.log(id_user);
     let data = [...contact]
-    let filteredData = data.filter(contact => contact.id !== id)
-    axios.delete(`http://localhost:3000/contact/${id}`).then(res => {
+    let filteredData = data.filter(contact => contact.id_user !== id_user)
+    axios.delete(`https://3c6b-2001-448a-302c-326a-e5d3-1ce1-9475-a65f.ngrok.io/api/users/${id_user}`).then(res => {
       alert('berhasil menghapus data')
     })
     setContact(filteredData)
-  }
+}
 
   return (
     <div className="App">
-      <h1 className="px-3 py-3">My Contact List</h1>
-
+      <h1 className="px-3 py-3"><center>My Contact List</center></h1>
       <form onSubmit={handleSubmit} className="px-3 py-4">
         <div className="form-group">
           <label htmlFor="">Name</label>
@@ -95,8 +97,8 @@ function handleSubmit(e) {
           type="text"
           className="form-control"
           onChange={handleChange}
-          value={formData.name}
-          name="name"
+          value={formData.nama}
+          name="nama"
           />
         </div>
         <div className="form-group mt-3">

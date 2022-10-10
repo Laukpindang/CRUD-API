@@ -1,19 +1,14 @@
 {
   "contact": [
     {
-      "id": "fa50d5d9290",
-      "name": "Ferdi",
-      "telp": "1"
+      "nama": "Ferdiansyah",
+      "telp": "081220148769",
+      "id": "fa50d5d9290"
     },
     {
-      "name": "Ivan",
-      "telp": "03",
-      "id": "50d5d9290aa"
-    },
-    {
-      "id": "b4dc3f6ae49",
-      "name": "Jhon Doe",
-      "telp": "222"
+      "id": "bbcc4ae94f7",
+      "nama": "ferdi",
+      "telp": "2"
     }
   ]
 }
