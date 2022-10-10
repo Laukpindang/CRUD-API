@@ -1,21 +1,12 @@
 import "./App.css";
 import List from "./List";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { uid } from "uid";
+import axios from "axios";
 
 function App() {
 
-  const[contact, setContact] = useState([{
-    id: 1,
-    name: "Jhon Doe",
-    telp: "08832413421",
-  },
-  {
-    id: 2,
-    name: "Alex Picker",
-    telp: "08832413421",
-  }
-]);
+  const[contact, setContact] = useState([]);
 
 const [isUpdate, setIsUpdate] = useState({
   id: null,
@@ -26,6 +17,13 @@ const [formData, setFormData] = useState({
   name: '',
   telp: '',
 })
+
+useEffect(() => {
+  //ambil data
+  axios.get('http://localhost:3000/contact').then((res) =>{
+    setContact(res?.data ?? [])
+  })
+},[])
 
 function handleChange(e){
   let data = {...formData};
@@ -50,8 +48,19 @@ function handleSubmit(e) {
         contact.telp = formData.telp;
       }
     });
+
+    axios.put(`http://localhost:3000/contact/${isUpdate.id}`, {
+      name: formData.name, telp: formData.telp
+    }).then(res => {
+      alert('berhasil mengedit data')
+    })
+
   }else{
-    data.push({id: uid(), name: formData.name, telp: formData.telp})
+    let newData = {id: uid(), name: formData.name, telp: formData.telp}
+    data.push(newData)
+    axios.post('http://localhost:3000/contact', newData).then(res => {
+      alert('berhasil menyimpan data')
+    })
   }
 
   setContact(data);
@@ -69,6 +78,9 @@ function handleSubmit(e) {
   function handleDelete(id) {
     let data = [...contact]
     let filteredData = data.filter(contact => contact.id !== id)
+    axios.delete(`http://localhost:3000/contact/${id}`).then(res => {
+      alert('berhasil menghapus data')
+    })
     setContact(filteredData)
   }
 
