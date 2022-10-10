@@ -6,7 +6,7 @@ import axios from "axios";
 
 function App() {
 
-  const[contact, setContact] = useState([]);
+const[contact, setContact] = useState([]);
 
 const [isUpdate, setIsUpdate] = useState({
   id: null,
