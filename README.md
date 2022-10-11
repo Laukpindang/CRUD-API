@@ -1,5 +1,16 @@
 # CRUD
 
+change API to 'https://localhost:3000/contact' for testing only or you can change it to your own API
+
+if API is changed to localhost:(
+    first : run 'json-server --watch contact.json', I dont recommend using -p to change port since I use default port(3000) when starting json-server.
+    second : now you can use 'yarn start' and if a message tell you port 3000 is used then type 'y' to start react in another port
+)
+
+if API is not changed or changed to your API(
+    you can skip 'json-server --watch contact.json', just run 'yarn start'
+)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

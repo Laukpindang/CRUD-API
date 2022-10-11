@@ -19,8 +19,8 @@ const [formData, setFormData] = useState({
 })
 
 useEffect(() => {
-  //ambil data
-  axios.get('https://3c6b-2001-448a-302c-326a-e5d3-1ce1-9475-a65f.ngrok.io/api/users/').then((res) =>{
+  //ambil data; untuk latihan mandiri ubah link menjadi 'https://localhost:3000 atau 3001/contact'
+  axios.get('https://5163-2001-448a-302c-326a-e5d3-1ce1-9475-a65f.ngrok.io/api/users/').then((res) =>{
     setContact(res?.data ?? [])
   })
 },[])
@@ -51,7 +51,7 @@ function handleSubmit(e) {
       }
     });
 
-    axios.put(`https://3c6b-2001-448a-302c-326a-e5d3-1ce1-9475-a65f.ngrok.io/api/users/${isUpdate.id_user}`, {
+    axios.put(`https://5163-2001-448a-302c-326a-e5d3-1ce1-9475-a65f.ngrok.io/api/users/${isUpdate.id_user}`, {
       nama: formData.nama, telp: formData.telp
     }).then(res => {
       alert('berhasil mengedit data')
@@ -60,7 +60,7 @@ function handleSubmit(e) {
   }else{
     let newData = {id_user: uid(), nama: formData.nama, telp: formData.telp}
     data.push(newData)
-    axios.post('https://3c6b-2001-448a-302c-326a-e5d3-1ce1-9475-a65f.ngrok.io/api/users/', newData).then(res => {
+    axios.post('https://5163-2001-448a-302c-326a-e5d3-1ce1-9475-a65f.ngrok.io/api/users/', newData).then(res => {
       alert('berhasil menyimpan data')
     })
   }
@@ -81,7 +81,7 @@ function handleSubmit(e) {
     console.log(id_user);
     let data = [...contact]
     let filteredData = data.filter(contact => contact.id_user !== id_user)
-    axios.delete(`https://3c6b-2001-448a-302c-326a-e5d3-1ce1-9475-a65f.ngrok.io/api/users/${id_user}`).then(res => {
+    axios.delete(`https://5163-2001-448a-302c-326a-e5d3-1ce1-9475-a65f.ngrok.io/api/users/${id_user}`).then(res => {
       alert('berhasil menghapus data')
     })
     setContact(filteredData)
